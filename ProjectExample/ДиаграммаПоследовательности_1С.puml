@@ -1,0 +1,24 @@
+@startuml zup
+actor spec_zup as "Специалист ЗУП"
+actor employ as "Сотрудник компании"
+participant 1c_zup as "1С ЗУП"
+database 1c_buh as "1С Бухгалтерия"
+participant mail as "Почтовый сервер компании"
+participant web as "1С Личный кабинет"
+
+
+group Расчетные листки
+    spec_zup->1c_zup : Создает документ \n"Отражение зарплаты в бух учете"
+    1c_zup -> 1c_buh : Типовой обмен\n"Синхронизация через файл"
+    1c_zup -> mail : Расчетные листки
+    mail -> employ: Расчетный листок e-mail
+end group
+
+group Оформление отпуска
+    employ -> web : Оформление отпуска
+    web -> 1c_zup : Отправка информации об отпуске
+    1c_zup -> : Подтверждение отпуска
+end group
+
+@enduml
+
