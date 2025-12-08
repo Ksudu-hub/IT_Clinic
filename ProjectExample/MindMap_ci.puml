@@ -1,0 +1,45 @@
+
+@startmindmap
+<style>
+mindmapDiagram {
+  .green {
+    BackgroundColor lightgreen
+  }
+  .rose {
+    BackgroundColor #FFBBCC
+  }
+  .blue {
+    BackgroundColor lightblue
+  }
+  .orange {
+    BackgroundColor Orange
+  }
+}
+</style>
+
+
+* <&globe>Otus: Использование библиотек Jenkins <<orange>>
+
+' gitsync
+** gitsync <<green>>
+*** Pipeline <<rose>>
+*** Цель: Синхронизация с gitsync <<rose>>
+*** <&star>Библиотека <b>Vanessa Usher</b> <<rose>>
+*** Используемые ветки Git <<rose>>
+**** storage_1c
+
+' ci_otus
+** ci_otus <<blue>>
+*** Multibranch Pipeline <<rose>>
+*** Цель: Контур тестирования <<rose>>
+**** Синтаксис-проверка
+**** Юнит-тестирование Yaxunit
+**** Сценарные тесты Vanessa Automation
+**** Отображение отчета в Allure
+
+*** <&star>Библиотека <b>Jenkins-Lib</b> <<rose>>
+*** Используемые ветки Git <<rose>>
+**** storage_1c
+**** main
+
+@endmindmap

@@ -1,0 +1,83 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/font-awesome-5
+!define FONTAWESOME6 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/font-awesome-6
+!include DEVICONS/streamline.puml
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+!include DEVICONS/prolog.puml
+!include DEVICONS/aptana.puml
+!include DEVICONS/android.puml
+!include DEVICONS/smashing_magazine.puml
+!include DEVICONS/terminal.puml
+!include DEVICONS/scala.puml
+!include DEVICONS/ie.puml
+!include FONTAWESOME/users.puml
+!include FONTAWESOME6/d.puml
+!include <office/Servers/database_server>
+!include <office/Servers/file_server>
+!include <office/Servers/application_server>
+!include <office/Concepts/service_application>
+!include <office/Concepts/firewall>
+
+' линии без скруглений два варианта
+' skinparam Linetype ortho
+' skinparam Linetype polyline
+
+AddElementTag("Введен в эксплуатацию", $bgColor="#339933")
+AddElementTag("Запланирован", $bgColor="#FFD700")
+AddElementTag("В процессе запуска", $bgColor="#ff8c69")
+AddElementTag("Изменения бизнес-домена", $bgColor="#FF0033")
+AddRelTag("Изменение связей бизнес-доменов", $textColor="#FF0033", $lineColor="#FF0033", $lineStyle = BoldLine())
+
+AddRelTag("ext", $textColor="red", $lineColor="red", $sprite="firewall,scale=0.3,color=red")
+AddRelTag("uses", $textColor="orange", $lineColor="orange")
+
+' #ЗаполнениеТеговСвязей#
+
+title
+ <b>Модель функций и потоков данных бизнес-доменов</b>
+end title 
+
+
+Container(ЗУП, "ЗУП", "Бизнес-домен", "", $sprite="d",$tags="Запланирован") 
+
+Container(WMS, "WMS", "Бизнес-домен", "Изменяется: Корректировка проведения документов", $sprite="d",$tags="Изменения бизнес-домена") 
+System_Boundary(sys1СЕРПУХ, "1С ЕРП.УХ") {
+   
+Container(Склад, "Склад", "Бизнес-домен", "Изменяется: Фиксация значений по факту работы", $sprite="d",$tags="Изменения бизнес-домена") 
+
+Container(НСИ, "НСИ", "Бизнес-домен", "", $sprite="d",$tags="Изменения бизнес-домена") 
+
+Container(Продажи, "Продажи", "Бизнес-домен", "", $sprite="d",$tags="Запланирован") 
+
+Container(ВнешняяЛогистика, "Внешняя логистика", "Бизнес-домен", "", $sprite="d",$tags="Введен в эксплуатацию") 
+
+Container(ГарантияИСервисноеОбслуживание, "Гарантия и сервисное обслуживание", "Бизнес-домен", "", $sprite="d",$tags="В процессе запуска") 
+
+Container(Закупки, "Закупки", "Бизнес-домен", "", $sprite="d",$tags="Введен в эксплуатацию") 
+
+Container(Маркетинг, "Маркетинг", "Бизнес-домен", "", $sprite="d",$tags="Введен в эксплуатацию") 
+
+Container(Казначейство, "Казначейство", "Бизнес-домен", "", $sprite="d",$tags="Запланирован") 
+}
+
+
+Rel(НСИ, WMS, "1. Номенклатура","","")
+
+Rel(Склад, WMS, "2. Перемещение товара","Изменяется","", $tags="Изменение связей бизнес-доменов")
+
+Rel(WMS, Склад, "3. Статус факта","Изменяется","Корректировка механизма загрузки факта", $tags="Изменение связей бизнес-доменов")
+
+Rel(ЗУП, НСИ, "4. Сотрудники, упр.структура, кадровая история","","")
+
+Rel(Закупки, ВнешняяЛогистика, "5. ","","")
+
+Rel(Закупки, Маркетинг, "6. ","Исключается","Не актуально", $tags="Изменение связей бизнес-доменов")
+
+SHOW_FLOATING_LEGEND()
+Lay_Distance(LEGEND(), sys1СЕРПУХ, 1)
+' Уникальный идентификатор схемы: dbe276fe-3c90-4500-a3d9-ec0a32d21a4a                        
+@enduml
